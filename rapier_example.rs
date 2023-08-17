@@ -41,7 +41,7 @@ fn main() {
        Get an entity id from components
     */
     set_trace_log(TraceLogLevel::LOG_NONE);
-    let (mut rl, thread) = raylib::init().size(800, 600).title("Hello World").fullscreen().build();
+    let (mut rl, thread) = raylib::init().size(800, 600).title("Hello World").build();
     rl.set_target_fps(FPS);
 
     let mut world = World::new();
