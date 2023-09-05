@@ -77,6 +77,7 @@ impl System for CloseSystem {
 }
 
 fn add_square(world: &World, operation_stack: &mut OperationStack, times_run: usize) {
+    // broken af...
     for _ in 0..(times_run + 1) {
         operation_stack.new_entity();
     }
