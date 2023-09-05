@@ -39,7 +39,7 @@ impl System for AddSquaresSystem {
         let rl = world.get_resource::<RaylibHandle>().unwrap();
         let mut counter = world.get_resource_mut::<SquareCounter>().unwrap();
         if rl.is_mouse_button_pressed(MouseButton::MOUSE_LEFT_BUTTON) {
-            let multi = 25usize;
+            let multi = 100usize;
             for i in 0..multi {
                 add_square(world, operation_stack, i);
             }
@@ -76,12 +76,9 @@ impl System for CloseSystem {
     }
 }
 
-fn add_square(world: &World, operation_stack: &mut OperationStack, times_run: usize) {
-    // broken af...
-    for _ in 0..(times_run + 1) {
-        operation_stack.new_entity();
-    }
-    let square = world.next_slot() + times_run;
+fn add_square(world: &World, operation_stack: &mut OperationStack, slot_offset: usize) {
+    operation_stack.new_entity();
+    let square = world.next_slot() + slot_offset;
     let color = Color::new(
         get_random_value::<i32>(0, 255) as u8,
         get_random_value::<i32>(0, 255) as u8,
@@ -89,8 +86,16 @@ fn add_square(world: &World, operation_stack: &mut OperationStack, times_run: us
         255,
     );
     let dir = Vector2::new(
-        if get_random_value::<i32>(0, 1) == 0 { -1.0 } else { 1.0 },
-        if get_random_value::<i32>(0, 1) == 0 { -1.0 } else { 1.0 },
+        if get_random_value::<i32>(0, 1) == 0 {
+            -1.0
+        } else {
+            1.0
+        },
+        if get_random_value::<i32>(0, 1) == 0 {
+            -1.0
+        } else {
+            1.0
+        },
     )
     .normalized();
     let speed = get_random_value::<i32>(100, 800) as f32;
